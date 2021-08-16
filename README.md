@@ -6,4 +6,4 @@ Plugin will get more features in next updates. This GitHub page will also receiv
 ## Installation
 Plugin requires **Exiled 2.13.0+**
 
-You must put "randomitems.dll" in Plugins Folder. Config will be created by plugin, but you can download config.yml which is extended and contains hints about configuration
+You must put "RandomItems.dll" in Plugins Folder. Config will be created by plugin, but you can download config.yml which is extended and contains hints about configuration
