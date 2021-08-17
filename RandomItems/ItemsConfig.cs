@@ -32,12 +32,10 @@ namespace RandomItems
 
                 stream.Close();
             }
-            catch (System.Exception)
+            catch
             {
-                Log.Error("Can't deserialize items config");
-                throw;
-            }
-           
+                Log.Error("Can't deserialize config");
+            }   
         }
         static void CreateNewConfig()
         {
@@ -47,12 +45,15 @@ namespace RandomItems
             
             PermissionsNames permissionsNames = new PermissionsNames();
             HumanClasses humanClasses = new HumanClasses();
-            ItemList items = new ItemList();         
-            permissionsNames.Classes = new Dictionary<string, HumanClasses>();          
+            ItemList items = new ItemList();
+
+            permissionsNames.Classes = new Dictionary<string, HumanClasses>();
             humanClasses.Chances = new Dictionary<int, ItemList>();
-            permissionsConfig.Permissions.Add("vip", permissionsNames);           
+
+            permissionsConfig.Permissions.Add("vip", permissionsNames);
             permissionsNames.Classes.Add("ClassD", humanClasses);
-            humanClasses.Chances.Add(100, items);                       
+            humanClasses.Chances.Add(100, items);
+
             items.Items.Add("Coin");
             items.Items.Add("Medkit");            
 
@@ -80,6 +81,7 @@ namespace RandomItems
     }
     public class HumanClasses
     {
+        public int MaxNumOfItemList = 1;
         public Dictionary<int, ItemList> Chances;
     }
     public class ItemList

@@ -12,7 +12,7 @@ namespace RandomItems
         {
             if (e.Player.IsHuman)
             {
-                if (permissionsConfig != null)
+                try
                 {
                     foreach (var singlePermission in permissionsConfig.Permissions)
                     {
@@ -22,11 +22,12 @@ namespace RandomItems
                         }
                     }
                 }
-                else
+                catch 
                 {
-                    Log.Error("Can't read config!");
+
+                    Log.Error("Config contains errors or it's empty!");
                 }
-            }        
+            }
         }
         void CheckClasses(PermissionsNames permissions, ChangedRoleEventArgs e)
         {
@@ -47,38 +48,51 @@ namespace RandomItems
                     }
                     catch
                     {
-                        Log.Error($"Can't find role \"{playerClass.Key}\"");
-                        throw;
+                        Log.Error($"Can't find role \"{playerClass.Key}\""); 
                     }
                 }
             }
         }
+        int addedItems = 0;
         void RandomizeItems(HumanClasses humanClasses, ChangedRoleEventArgs e)
         {
-            Random random = new Random();
-            int chance = random.Next(1, 100);
+            addedItems = 0;
+            Random random = new Random();         
             foreach (var item in humanClasses.Chances)
-            {               
+            {
+                int chance = random.Next(1, 100);
                 if (item.Key >= chance)
                 {
-                    CheckItems(item.Value, e);
+                    if (humanClasses.MaxNumOfItemList > addedItems)
+                    {
+                        CheckItems(item.Value, e);
+                    }
                 }
             }
         }
         void CheckItems(ItemList itemList, ChangedRoleEventArgs e)
         {
-            foreach (string item in itemList.Items)
+            if (itemList.Items != null)
             {
-                try
+                addedItems++;
+                foreach (string item in itemList.Items)
                 {
-                    e.Player.AddItem((ItemType)Enum.Parse(typeof(ItemType), item, true));
+                    if (item != null)
+                    {
+                        try
+                        {
+                            ItemType itemType = (ItemType)Enum.Parse(typeof(ItemType), item, true);
+                            e.Player.AddItem(itemType);
+
+                            LogSystem.WhenPlayerGetItem(item, e.Player.Nickname);
+                        }
+                        catch
+                        {
+                            Log.Error($"Can't add {item} to {e.Player.Nickname}.");
+                        }
+                    }
                 }
-                catch 
-                {
-                    Log.Error($"Can't add {item} to {e.Player.Nickname}.");
-                    throw;
-                }            
-            }
+            }           
         }
     }
 }

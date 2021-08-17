@@ -1,7 +1,8 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Enums;
 
-using Player = Exiled.Events.Handlers.Player;
+using Handler = Exiled.Events.Handlers;
+using System;
 
 namespace RandomItems
 { 
@@ -10,32 +11,28 @@ namespace RandomItems
         private static readonly RandomItems randomItems = new RandomItems();
         public static RandomItems newRandomItems => randomItems;
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
+        public override Version RequiredExiledVersion => new Version(2, 13, 0);
+        public override Version Version => new Version(1 , 2 , 0);
         private RandomItems()
         {
         }
         AddingItems addingItems;
         public override void OnEnabled()
-        {           
+        {
             addingItems = new AddingItems();
-            Player.ChangedRole += addingItems.OnPlayerSpawn;
+            Handler.Player.ChangedRole += addingItems.OnPlayerSpawn;
 
             ItemsConfig.DeserializeItemsConfig();
 
             base.OnEnabled();
         }
-        public override void OnReloaded()
-        {
-            AddingItems.permissionsConfig = null;
-            ItemsConfig.DeserializeItemsConfig();
-            base.OnReloaded();  
-        }
         public override void OnDisabled()
         {
             AddingItems.permissionsConfig = null;
-            Player.ChangedRole -= addingItems.OnPlayerSpawn;
+            Handler.Player.ChangedRole -= addingItems.OnPlayerSpawn;
             addingItems = null;
 
-            base.OnDisabled();           
-        }    
+            base.OnDisabled();
+        }
     }
 }
