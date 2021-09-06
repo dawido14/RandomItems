@@ -4,6 +4,6 @@ Exiled plugin that allows you to give items randomly to players with specified r
 Plugin will get more features in next updates. This GitHub page will also receive updates. 
 
 ## Installation
-Plugin requires **Exiled 2.13.0+**
+Plugin requires **Exiled 3.0.0+**
 
 You must put "RandomItems.dll" in Plugins Folder. Config will be created by plugin, but you can download config.yml which is extended and contains hints about configuration
