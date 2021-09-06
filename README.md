@@ -1,7 +1,7 @@
 # RandomItems
 Exiled plugin that allows you to give items randomly to players with specified roles.
 
-Plugin will get more features in next updates. This GitHub page will also receive updates. 
+Plugin probably will get more features in next updates. This GitHub page will also receive updates. 
 
 ## Installation
 Plugin requires **Exiled 3.0.0+**
